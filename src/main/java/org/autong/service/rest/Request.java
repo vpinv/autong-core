@@ -33,7 +33,12 @@ public class Request {
   private Integer maxBodyLength;
   @Builder.Default private boolean verifySsl = false;
 
-  /** */
+  /**
+   * Authorization class.
+   *
+   * @version 1.0.1
+   * @since 1.0.1
+   */
   @Data
   @Builder
   public static class Authorization {
@@ -41,7 +46,12 @@ public class Request {
     private String password;
   }
 
-  /** */
+  /**
+   * ResponseType class.
+   *
+   * @version 1.0.1
+   * @since 1.0.1
+   */
   public enum ResponseType {
     TEXT,
     BYTE_ARRAY,

@@ -16,7 +16,7 @@ import org.testng.ITestResult;
  * @since 1.0.1
  */
 public class ReportPortalListener extends BaseTestNGListener {
-  /** Constant <code>SERVICE</code> */
+  /** Supplier for ReportPortalListener. */
   public static final Supplier<ITestNGService> SERVICE =
       new MemoizingSupplier<>(() -> new ReportPortalService(ReportPortal.builder().build()));
 
@@ -29,8 +29,14 @@ public class ReportPortalListener extends BaseTestNGListener {
     super(SERVICE.get());
   }
 
+  /**
+   * ReportPortalService class.
+   *
+   * @version 1.0.1
+   * @since 1.0.1
+   */
   public static class ReportPortalService extends TestNGService {
-
+    /** Constructor for ReportPortalService. */
     public ReportPortalService(@NotNull ReportPortal reportPortal) {
       super(reportPortal);
     }

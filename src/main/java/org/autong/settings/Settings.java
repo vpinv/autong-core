@@ -23,6 +23,12 @@ public class Settings {
   @Builder.Default private boolean enableUrlNavigation = false;
   @Builder.Default private Timeout timeout = Timeout.builder().build();
 
+  /**
+   * Timeout class.
+   *
+   * @version 1.0.1
+   * @since 1.0.1
+   */
   @Builder
   @Data
   public static class Timeout {
