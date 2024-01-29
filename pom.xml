@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.autong</groupId>
   <artifactId>autong</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <name>autong</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
@@ -492,6 +492,7 @@
             <force>true</force>
             <ignoreClirr>true</ignoreClirr>
             <doclint>all</doclint>
+            <fixTags>version,since,param,return,throws,link</fixTags>
           </configuration>
           <dependencies>
             <dependency>
