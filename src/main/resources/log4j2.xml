@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration packages="com.epam.ta.reportportal.log4j.appender" status="TRACE">
+  <Appenders>
+    <Console name="ConsoleAppender" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <File name="FileAppender" fileName="target/logs/application-${date:YYYY-MM-dd_HH-mm-ss-SSS}.log" immediateFlush="false" append="true">
+      <PatternLayout pattern="%d{HH:mm:ss} %-5level %logger{36} - %msg%n"/>
+    </File>
+    <ReportPortalLog4j2Appender name="ReportPortalAppender">
+      <PatternLayout pattern="%logger{36} - %msg%n"/>
+    </ReportPortalLog4j2Appender>
+  </Appenders>
+  <Loggers>
+    <Root level="DEBUG">
+      <AppenderRef ref="ConsoleAppender"/>
+    </Root>
+    <Logger name="org.autong" level="TRACE">
+      <AppenderRef ref="ConsoleAppender"/>
+      <AppenderRef ref="FileAppender"/>
+      <AppenderRef ref="ReportPortalAppender"/>
+    </Logger>
+    <Logger name="net.javacrumbs.jsonunit.difference" level="INFO">
+      <AppenderRef ref="ConsoleAppender"/>
+      <AppenderRef ref="FileAppender"/>
+      <AppenderRef ref="ReportPortalAppender"/>
+    </Logger>
+  </Loggers>
+</Configuration>
