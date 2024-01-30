@@ -1,4 +1,4 @@
-package org.autong.service.rest;
+package org.autong.service.rest.model;
 
 import java.io.InputStream;
 import java.util.Map;

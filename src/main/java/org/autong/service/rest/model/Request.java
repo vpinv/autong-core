@@ -1,4 +1,4 @@
-package org.autong.service.rest;
+package org.autong.service.rest.model;
 
 import com.google.gson.JsonObject;
 import java.util.HashMap;

@@ -12,6 +12,7 @@ public interface Client<I, O> {
    *
    * @param request a I object
    * @return a O object
+   * @since 1.0.3
    */
   O resolve(I request);
 }

@@ -20,6 +20,11 @@
 			"version": "latest",
 			"jdkVersion": "17",
 			"jdkDistro": "ms"
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "lts",
+			"nvmVersion": "latest"
 		}
 	}
 

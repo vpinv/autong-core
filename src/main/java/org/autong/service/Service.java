@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.autong.enums.ClientType;
 import org.autong.settings.Settings;
 
 /**
@@ -22,17 +23,26 @@ public class Service {
   @Setter(AccessLevel.PROTECTED)
   private Consumer<Validator> validator;
 
+  @Getter private Client client;
+
   /**
    * Constructor for Service.
    *
    * @param settings a {@link org.autong.settings.Settings} object
+   * @param clientType a {@link org.autong.enums.ClientType} object
+   * @since 1.0.3
    */
-  protected Service(Settings settings) {
+  public Service(Settings settings, ClientType clientType) {
     this.settings = settings;
     this.reset();
+    this.client = ClientFactory.getClient(clientType);
   }
 
-  /** reset. */
+  /**
+   * reset.
+   *
+   * @since 1.0.3
+   */
   public void reset() {
     this.updatedSettings = null;
     this.expectedResult = null;
@@ -44,6 +54,7 @@ public class Service {
    *
    * @param settings a {@link org.autong.settings.Settings} object
    * @return a {@link org.autong.service.Service} object
+   * @since 1.0.3
    */
   public Service withSettings(Settings settings) {
     this.updatedSettings = settings;
@@ -55,6 +66,7 @@ public class Service {
    *
    * @param validator a {@link java.util.function.Consumer} object
    * @return a {@link org.autong.service.Service} object
+   * @since 1.0.3
    */
   public Service withValidator(Consumer<Validator> validator) {
     this.validator = validator;
@@ -66,6 +78,7 @@ public class Service {
    *
    * @param expected a {@link com.google.gson.JsonObject} object
    * @return a {@link org.autong.service.Service} object
+   * @since 1.0.3
    */
   public Service withExpectedResult(JsonObject expected) {
     this.expectedResult = expected;
@@ -79,8 +92,21 @@ public class Service {
    * @param type a {@link java.lang.Class} object
    * @param <R> a R class
    * @return a R object
+   * @since 1.0.3
    */
   public <R> R mergeRequest(R newRequest, Class<R> type) {
     return null;
+  }
+
+  /**
+   * resolve.
+   *
+   * @param request a I object
+   * @param <I> a I class
+   * @param <O> a O class
+   * @return a O object
+   */
+  public <I, O> O resolve(I request) {
+    return (O) this.getClient().resolve(request);
   }
 }
