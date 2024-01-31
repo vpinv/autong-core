@@ -1,0 +1,40 @@
+$import:
+  - name: LoginService
+    path: org.autong/loginService.yaml
+
+testSuite:
+  - testcaseId: LOGIN-POSITIVE-0001
+    testcaseName: "Test login positive scenario-1"
+    steps:
+      - name: validate login
+        service: LoginService
+        method: login
+        request:
+          body: |
+            {
+              "username": "automation_user1",
+              "password": "automationTest123!",
+              "loginType": "BACKEND"
+            }
+        validation:
+          steps:
+            - expression: $[?(@.statusCode == 200)]
+
+  - testcaseId: LOGIN-NEGATIVE-0001
+    testcaseName: "Test login negative scenario-1"
+    steps:
+      - name: validate login
+        service: LoginService
+        method: login
+        request:
+          body: |
+            {
+              "username": "automation_user1",
+              "password": "invalid1234",
+              "loginType": "BACKEND"
+            }
+        validation:
+          steps:
+            - expression: $.body[?(@.status == 'FAIL')]
+            - expression: $[?(@.statusCode == 401)]
+

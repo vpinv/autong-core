@@ -1,4 +1,4 @@
-package org.autong.settings;
+package org.autong.config;
 
 import lombok.Builder;
 import lombok.Data;

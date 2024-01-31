@@ -1,0 +1,16 @@
+name: LoginService
+client: REST
+baseUri: http://api.jioscm-sit.jio.com/common-login-service
+headers:
+  "Content-Type": "application/json"
+  "Accept": "application/json"
+apis:
+  - name: login
+    basePath: /login
+    method: POST
+    body: |
+      {
+        "username": "${userName}",
+        "password": "${password}",
+        "loginType": "${loginType}"
+      }

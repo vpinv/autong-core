@@ -404,7 +404,7 @@
               </property>
               <property>
                 <name>listener</name>
-                <value>org.autong.test.testng.listener.ReportPortalListener,org.autong.test.testng.listener.RetryListener</value>
+                <value>org.autong.test.listener.ReportPortalListener</value>
               </property>
               <property>
                 <name>parallel</name>

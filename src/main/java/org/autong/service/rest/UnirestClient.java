@@ -1,6 +1,7 @@
 package org.autong.service.rest;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.Arrays;
@@ -16,9 +17,11 @@ import kong.unirest.UnirestConfigException;
 import kong.unirest.UnirestInstance;
 import kong.unirest.gson.GsonObjectMapper;
 import org.autong.annotation.Loggable;
-import org.autong.service.Client;
+import org.autong.config.Settings;
+import org.autong.service.AbstractClient;
 import org.autong.service.rest.model.Request;
 import org.autong.service.rest.model.Response;
+import org.autong.util.DataUtil;
 
 /**
  * UnirestClient class.
@@ -26,7 +29,47 @@ import org.autong.service.rest.model.Response;
  * @version 1.0.3
  * @since 1.0.3
  */
-public class UnirestClient implements Client<Request, Response> {
+public class UnirestClient extends AbstractClient<UnirestClient, Request, Response> {
+
+  /**
+   * Constructor for UnirestClient.
+   *
+   * @param settings a {@link org.autong.config.Settings} object
+   * @param request a {@link com.google.gson.JsonObject} object
+   */
+  protected UnirestClient(Settings settings, JsonObject request) {
+    super(settings, DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Class<Request> getRequestType() {
+    return Request.class;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Class<Response> getResponseType() {
+    return Response.class;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(Request newRequest) {
+    JsonObject source = DataUtil.toJsonObject(newRequest);
+    JsonObject target = DataUtil.toJsonObject(Request.builder().build());
+    if (this.getBaseRequest() != null) {
+      target = DataUtil.toJsonObject(this.getBaseRequest());
+    }
+
+    if (source.has("ignoreBaseHeaders") && source.get("ignoreBaseHeaders").getAsBoolean()) {
+      target.remove("headers");
+    }
+
+    JsonObject mergedRequest = DataUtil.deepMerge(source, target);
+    return DataUtil.getGson().fromJson(mergedRequest, Request.class);
+  }
+
   /** {@inheritDoc} */
   @Override
   public Response resolve(Request request) {

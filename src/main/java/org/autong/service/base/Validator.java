@@ -1,4 +1,4 @@
-package org.autong.service;
+package org.autong.service.base;
 
 import com.google.gson.JsonObject;
 import lombok.Builder;

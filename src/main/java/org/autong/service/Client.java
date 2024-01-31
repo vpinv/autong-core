@@ -1,18 +1,43 @@
 package org.autong.service;
 
+import org.autong.service.base.BaseService;
+
 /**
  * Client interface.
  *
  * @version 1.0.1
  * @since 1.0.1
  */
-public interface Client<I, O> {
+@SuppressWarnings("InterfaceTypeParameterName")
+public interface Client<Type, Request, Response> extends BaseService<Type> {
+
+  /**
+   * getRequestType.
+   *
+   * @return a {@link java.lang.Class} object
+   */
+  Class<Request> getRequestType();
+
+  /**
+   * getResponseType.
+   *
+   * @return a {@link java.lang.Class} object
+   */
+  Class<Response> getResponseType();
+
+  /**
+   * mergeRequest.
+   *
+   * @param newRequest a Request object
+   * @return a Request object
+   */
+  Request mergeRequest(Request newRequest);
+
   /**
    * resolve.
    *
-   * @param request a I object
-   * @return a O object
-   * @since 1.0.3
+   * @param request a Request object
+   * @return a Response object
    */
-  O resolve(I request);
+  Response resolve(Request request);
 }

@@ -1,6 +1,7 @@
 package org.autong.service.rest;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -16,10 +17,12 @@ import java.util.Map;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.autong.annotation.Loggable;
+import org.autong.config.Settings;
 import org.autong.exception.CoreException;
-import org.autong.service.Client;
+import org.autong.service.AbstractClient;
 import org.autong.service.rest.model.Request;
 import org.autong.service.rest.model.Response;
+import org.autong.util.DataUtil;
 
 /**
  * RestAssuredClient class.
@@ -27,7 +30,7 @@ import org.autong.service.rest.model.Response;
  * @version 1.0.3
  * @since 1.0.3
  */
-public class RestAssuredClient implements Client<Request, Response> {
+public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request, Response> {
 
   static {
     EncoderConfig encoderConfig =
@@ -35,6 +38,45 @@ public class RestAssuredClient implements Client<Request, Response> {
             .getEncoderConfig()
             .appendDefaultContentCharsetToContentTypeIfUndefined(false);
     RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
+  }
+
+  /**
+   * Constructor for RestAssuredClient.
+   *
+   * @param settings a {@link org.autong.config.Settings} object
+   * @param request a {@link com.google.gson.JsonObject} object
+   */
+  public RestAssuredClient(Settings settings, JsonObject request) {
+    super(settings, DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Class<Request> getRequestType() {
+    return Request.class;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Class<Response> getResponseType() {
+    return Response.class;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(Request newRequest) {
+    JsonObject source = DataUtil.toJsonObject(newRequest);
+    JsonObject target = DataUtil.toJsonObject(Request.builder().build());
+    if (this.getBaseRequest() != null) {
+      target = DataUtil.toJsonObject(this.getBaseRequest());
+    }
+
+    if (source.has("ignoreBaseHeaders") && source.get("ignoreBaseHeaders").getAsBoolean()) {
+      target.remove("headers");
+    }
+
+    JsonObject mergedRequest = DataUtil.deepMerge(source, target);
+    return DataUtil.getGson().fromJson(mergedRequest, Request.class);
   }
 
   /** {@inheritDoc} */

@@ -1,0 +1,8 @@
+name: Test Suite
+
+suites:
+- name: runner_suite
+  tests:
+  - name: Service Tests
+    classes:
+    - org.autong.TestRunner
