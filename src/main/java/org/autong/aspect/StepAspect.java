@@ -26,6 +26,7 @@ public class StepAspect {
    * startNestedStep.
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
+   * @since 1.0.5
    */
   public static void startNestedStep(JoinPoint joinPoint) {
     Step step = getStep(joinPoint);
@@ -44,6 +45,7 @@ public class StepAspect {
    * finishNestedStep.
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
+   * @since 1.0.5
    */
   public static void finishNestedStep(JoinPoint joinPoint) {
     Step step = getStep(joinPoint);
@@ -58,6 +60,7 @@ public class StepAspect {
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
    * @param throwable a {@link java.lang.Throwable} object
+   * @since 1.0.5
    */
   public static void failedNestedStep(JoinPoint joinPoint, final Throwable throwable) {
     Step step = getStep(joinPoint);

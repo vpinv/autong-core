@@ -15,6 +15,7 @@ public interface Client<Type, Request, Response> extends BaseService<Type> {
    * getRequestType.
    *
    * @return a {@link java.lang.Class} object
+   * @since 1.0.5
    */
   Class<Request> getRequestType();
 
@@ -22,6 +23,7 @@ public interface Client<Type, Request, Response> extends BaseService<Type> {
    * getResponseType.
    *
    * @return a {@link java.lang.Class} object
+   * @since 1.0.5
    */
   Class<Response> getResponseType();
 
@@ -30,6 +32,7 @@ public interface Client<Type, Request, Response> extends BaseService<Type> {
    *
    * @param newRequest a Request object
    * @return a Request object
+   * @since 1.0.5
    */
   Request mergeRequest(Request newRequest);
 
@@ -38,6 +41,7 @@ public interface Client<Type, Request, Response> extends BaseService<Type> {
    *
    * @param request a Request object
    * @return a Response object
+   * @since 1.0.5
    */
   Response resolve(Request request);
 }

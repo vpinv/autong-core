@@ -36,8 +36,9 @@ public class UnirestClient extends AbstractClient<UnirestClient, Request, Respon
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
-  protected UnirestClient(Settings settings, JsonObject request) {
+  public UnirestClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));
   }
 
@@ -51,23 +52,6 @@ public class UnirestClient extends AbstractClient<UnirestClient, Request, Respon
   @Override
   public Class<Response> getResponseType() {
     return Response.class;
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  public Request mergeRequest(Request newRequest) {
-    JsonObject source = DataUtil.toJsonObject(newRequest);
-    JsonObject target = DataUtil.toJsonObject(Request.builder().build());
-    if (this.getBaseRequest() != null) {
-      target = DataUtil.toJsonObject(this.getBaseRequest());
-    }
-
-    if (source.has("ignoreBaseHeaders") && source.get("ignoreBaseHeaders").getAsBoolean()) {
-      target.remove("headers");
-    }
-
-    JsonObject mergedRequest = DataUtil.deepMerge(source, target);
-    return DataUtil.getGson().fromJson(mergedRequest, Request.class);
   }
 
   /** {@inheritDoc} */
@@ -204,12 +188,11 @@ public class UnirestClient extends AbstractClient<UnirestClient, Request, Respon
     request.getHeaders().remove("Content-Type");
 
     Map<String, Object> body = buildMultiPartBody(request);
-    switch (request.getMethod()) {
+    switch (request.getType()) {
       case POST -> multipartBody = unirest.post(request.getBasePath()).fields(body);
       case PUT -> multipartBody = unirest.put(request.getBasePath()).fields(body);
       case PATCH -> multipartBody = unirest.patch(request.getBasePath()).fields(body);
-      default -> throw new UnirestConfigException(
-          "Invalid method type " + request.getMethod().name());
+      default -> throw new UnirestConfigException("Invalid type type " + request.getType().name());
     }
 
     if (request.getResponseType() != null
@@ -231,14 +214,13 @@ public class UnirestClient extends AbstractClient<UnirestClient, Request, Respon
     GetRequest getRequest = null;
     UnirestInstance unirest = createInstance(request);
 
-    switch (request.getMethod()) {
+    switch (request.getType()) {
       case GET -> getRequest = unirest.get(request.getBasePath());
       case POST -> requestWithBody = unirest.post(request.getBasePath());
       case PUT -> requestWithBody = unirest.put(request.getBasePath());
       case PATCH -> requestWithBody = unirest.patch(request.getBasePath());
       case DELETE -> requestWithBody = unirest.delete(request.getBasePath());
-      default -> throw new UnirestConfigException(
-          "Invalid method type " + request.getMethod().name());
+      default -> throw new UnirestConfigException("Invalid type type " + request.getType().name());
     }
 
     if (request.getResponseType() != null

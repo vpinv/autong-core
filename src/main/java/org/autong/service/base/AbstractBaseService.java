@@ -27,13 +27,18 @@ public abstract class AbstractBaseService<Type> implements BaseService<Type> {
    * Constructor for AbstractBaseService.
    *
    * @param settings a {@link org.autong.config.Settings} object
+   * @since 1.0.5
    */
   protected AbstractBaseService(Settings settings) {
     this.settings = settings;
     this.reset();
   }
 
-  /** reset. */
+  /**
+   * reset.
+   *
+   * @since 1.0.5
+   */
   public void reset() {
     this.updatedSettings = null;
     this.expectedResult = null;

@@ -23,6 +23,7 @@ public class ServiceFactory {
    * initialize.
    *
    * @param suite a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   public static void initialize(JsonObject suite) {
     JsonArray serviceImports = suite.get("$import").getAsJsonArray();
@@ -42,6 +43,7 @@ public class ServiceFactory {
    *
    * @param name a {@link java.lang.String} object
    * @return a {@link org.autong.service.builder.Service} object
+   * @since 1.0.5
    */
   public static Service get(String name) {
     return serviceMap.get(name);
@@ -51,6 +53,7 @@ public class ServiceFactory {
    * validate.
    *
    * @param validator a {@link org.autong.service.base.Validator} object
+   * @since 1.0.5
    */
   public static void validate(Validator validator) {
     ServiceValidator.validate(validator);

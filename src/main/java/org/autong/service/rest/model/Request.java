@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
-import org.autong.enums.HttpMethod;
+import org.autong.enums.HttpRequestType;
 
 /**
  * Request class.
@@ -16,9 +16,9 @@ import org.autong.enums.HttpMethod;
 @Data
 @Builder
 public class Request {
+  private HttpRequestType type;
   private String baseUri;
   private String basePath;
-  private HttpMethod method;
   private String accept;
   @Builder.Default private Map<String, String> headers = new HashMap<>();
   private boolean ignoreBaseHeaders;

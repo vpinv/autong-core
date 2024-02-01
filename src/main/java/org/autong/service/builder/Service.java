@@ -27,6 +27,7 @@ public class Service {
    * Constructor for Service.
    *
    * @param serviceInfo a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   public Service(JsonObject serviceInfo) {
     this.client =
@@ -50,6 +51,7 @@ public class Service {
    *
    * @param methodName a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   @Loggable
   public JsonObject getRequest(String methodName) {
@@ -62,6 +64,7 @@ public class Service {
    * @param methodName a {@link java.lang.String} object
    * @param request a {@link com.google.gson.JsonObject} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   @Loggable
   public JsonObject run(String methodName, JsonObject request) {

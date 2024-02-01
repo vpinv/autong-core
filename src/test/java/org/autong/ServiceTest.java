@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import java.util.Map;
 import org.autong.config.Settings;
 import org.autong.enums.ClientType;
-import org.autong.enums.HttpMethod;
+import org.autong.enums.HttpRequestType;
 import org.autong.service.ClientFactory;
 import org.autong.service.rest.RestAssuredClient;
 import org.autong.service.rest.model.Request;
@@ -35,7 +35,7 @@ public class ServiceTest {
         Request.builder()
             .baseUri("https://petstore.swagger.io")
             .basePath("/v2/pet/1")
-            .method(HttpMethod.GET)
+            .type(HttpRequestType.GET)
             .headers(ImmutableMap.ofEntries(Map.entry("accept", "application/json")))
             .build();
     Response response = client.resolve(request);

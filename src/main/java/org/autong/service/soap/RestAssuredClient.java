@@ -28,6 +28,7 @@ public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   public RestAssuredClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));
@@ -57,7 +58,7 @@ public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request
     RequestSpecification requestSpecification = buildRequest(request);
 
     io.restassured.response.Response response;
-    switch (request.getMethod()) {
+    switch (request.getType()) {
       case GET -> response = RestAssured.given().spec(requestSpecification).get();
       case POST -> response = RestAssured.given().spec(requestSpecification).post();
       case PUT -> response = RestAssured.given().spec(requestSpecification).put();

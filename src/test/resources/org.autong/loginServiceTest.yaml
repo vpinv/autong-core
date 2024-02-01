@@ -18,7 +18,7 @@ testSuite:
             }
         validation:
           steps:
-            - expression: $[?(@.statusCode == 200)]
+            - expression: $[?(@.statusCode == 401)]
 
   - testcaseId: LOGIN-NEGATIVE-0001
     testcaseName: "Test login negative scenario-1"

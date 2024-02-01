@@ -19,7 +19,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.autong.config.Settings;
 import org.autong.exception.CoreException;
-import org.autong.service.Client;
+import org.autong.service.base.BaseService;
 import org.autong.service.base.Validator;
 import org.autong.util.DataUtil;
 import org.autong.util.LoggerUtil;
@@ -42,6 +42,7 @@ public class RunnableAspect {
    * beforeMethodAop.
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
+   * @since 1.0.5
    */
   @Before("@annotation(org.autong.annotation.Runnable) && execution(* *(..))")
   public void beforeMethodAop(JoinPoint joinPoint) {
@@ -62,6 +63,7 @@ public class RunnableAspect {
    * @param proceedingJoinPoint a {@link org.aspectj.lang.ProceedingJoinPoint} object
    * @return a {@link java.lang.Object} object
    * @throws java.lang.Throwable if any.
+   * @since 1.0.5
    */
   @Around("@annotation(org.autong.annotation.Runnable) && execution(* *(..))")
   public Object aroundMethodAop(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
@@ -108,6 +110,7 @@ public class RunnableAspect {
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
    * @param result a {@link java.lang.Object} object
+   * @since 1.0.5
    */
   @AfterReturning(
       pointcut = "@annotation(org.autong.annotation.Runnable) && execution(* *(..))",
@@ -126,6 +129,7 @@ public class RunnableAspect {
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
    * @param ex a {@link java.lang.Throwable} object
+   * @since 1.0.5
    */
   @AfterThrowing(
       pointcut = "@annotation(org.autong.annotation.Runnable) && execution(* *(..))",
@@ -150,7 +154,7 @@ public class RunnableAspect {
   }
 
   private static Settings getSettings(Logger log, ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
+    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
       Settings settings = getUpdatedSettings(proceedingJoinPoint);
       if (settings != null) {
         String message =
@@ -165,35 +169,35 @@ public class RunnableAspect {
   }
 
   private static Settings getDefaultSettings(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
+    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
       return service.getSettings();
     }
     return null;
   }
 
   private static Settings getUpdatedSettings(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
+    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
       return service.getUpdatedSettings();
     }
     return null;
   }
 
   private static Consumer<Validator> getValidator(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
+    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
       return service.getValidator();
     }
     return null;
   }
 
   private static JsonObject getExpectedResult(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
+    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
       return service.getExpectedResult();
     }
     return null;
   }
 
   private static void reset(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
+    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
       service.reset();
     }
   }

@@ -45,6 +45,7 @@ public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   public RestAssuredClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));
@@ -64,28 +65,11 @@ public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request
 
   /** {@inheritDoc} */
   @Override
-  public Request mergeRequest(Request newRequest) {
-    JsonObject source = DataUtil.toJsonObject(newRequest);
-    JsonObject target = DataUtil.toJsonObject(Request.builder().build());
-    if (this.getBaseRequest() != null) {
-      target = DataUtil.toJsonObject(this.getBaseRequest());
-    }
-
-    if (source.has("ignoreBaseHeaders") && source.get("ignoreBaseHeaders").getAsBoolean()) {
-      target.remove("headers");
-    }
-
-    JsonObject mergedRequest = DataUtil.deepMerge(source, target);
-    return DataUtil.getGson().fromJson(mergedRequest, Request.class);
-  }
-
-  /** {@inheritDoc} */
-  @Override
   public Response resolve(Request request) {
     RequestSpecification requestSpecification = buildRequest(request);
 
     io.restassured.response.Response response;
-    switch (request.getMethod()) {
+    switch (request.getType()) {
       case GET -> response = RestAssured.given().spec(requestSpecification).get();
       case POST -> response = RestAssured.given().spec(requestSpecification).post();
       case PUT -> response = RestAssured.given().spec(requestSpecification).put();

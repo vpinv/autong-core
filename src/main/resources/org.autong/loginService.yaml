@@ -7,7 +7,7 @@ headers:
 apis:
   - name: login
     basePath: /login
-    method: POST
+    type: POST
     body: |
       {
         "username": "${userName}",

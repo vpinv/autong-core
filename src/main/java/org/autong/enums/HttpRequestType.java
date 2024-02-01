@@ -1,12 +1,12 @@
 package org.autong.enums;
 
 /**
- * HttpMethod class.
+ * HttpRequestType class.
  *
  * @version 1.0.1
  * @since 1.0.1
  */
-public enum HttpMethod {
+public enum HttpRequestType {
   GET,
   HEAD,
   POST,

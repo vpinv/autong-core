@@ -82,7 +82,7 @@ public class TestRunner implements ITest {
     for (JsonElement step : steps) {
       RunnableFactory.get()
           .withValidator(ServiceFactory::validate)
-          .withExpectedResult(step.getAsJsonObject().get("validator").getAsJsonObject())
+          .withExpectedResult(step.getAsJsonObject().get("validation").getAsJsonObject())
           .run(
               step.getAsJsonObject().get("name").getAsString(),
               () ->

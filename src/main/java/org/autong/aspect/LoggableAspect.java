@@ -33,6 +33,7 @@ public class LoggableAspect {
    * beforeMethodAop.
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
+   * @since 1.0.5
    */
   @Before("@annotation(org.autong.annotation.Loggable) && execution(* *(..))")
   public void beforeMethodAop(JoinPoint joinPoint) {
@@ -51,6 +52,7 @@ public class LoggableAspect {
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
    * @param result a {@link java.lang.Object} object
+   * @since 1.0.5
    */
   @AfterReturning(
       pointcut = "@annotation(org.autong.annotation.Loggable) && execution(* *(..))",
@@ -69,6 +71,7 @@ public class LoggableAspect {
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
    * @param ex a {@link java.lang.Throwable} object
+   * @since 1.0.5
    */
   @AfterThrowing(
       pointcut = "@annotation(org.autong.annotation.Loggable) && execution(* *(..))",
@@ -83,6 +86,7 @@ public class LoggableAspect {
    *
    * @param joinPoint a {@link org.aspectj.lang.JoinPoint} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.5
    */
   public static String getMethodSignature(JoinPoint joinPoint) {
     return joinPoint.getSignature().getDeclaringTypeName()
@@ -96,6 +100,7 @@ public class LoggableAspect {
    *
    * @param args an array of {@link java.lang.Object} objects
    * @return a {@link java.lang.String} object
+   * @since 1.0.5
    */
   public static String formatMethodArguments(Object[] args) {
     try {
@@ -110,6 +115,7 @@ public class LoggableAspect {
    *
    * @param result a {@link java.lang.Object} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.5
    */
   public static String formatMethodReturnType(Object result) {
     try {

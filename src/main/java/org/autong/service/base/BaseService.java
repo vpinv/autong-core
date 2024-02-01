@@ -16,6 +16,7 @@ public interface BaseService<Type> {
    * getSettings.
    *
    * @return a {@link org.autong.config.Settings} object
+   * @since 1.0.5
    */
   Settings getSettings();
 
@@ -23,6 +24,7 @@ public interface BaseService<Type> {
    * getUpdatedSettings.
    *
    * @return a {@link org.autong.config.Settings} object
+   * @since 1.0.5
    */
   Settings getUpdatedSettings();
 
@@ -30,6 +32,7 @@ public interface BaseService<Type> {
    * getValidator.
    *
    * @return a {@link java.util.function.Consumer} object
+   * @since 1.0.5
    */
   Consumer<Validator> getValidator();
 
@@ -37,10 +40,15 @@ public interface BaseService<Type> {
    * getExpectedResult.
    *
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   JsonObject getExpectedResult();
 
-  /** reset. */
+  /**
+   * reset.
+   *
+   * @since 1.0.5
+   */
   void reset();
 
   /**
@@ -48,6 +56,7 @@ public interface BaseService<Type> {
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @return a Type object
+   * @since 1.0.5
    */
   Type withSettings(Settings settings);
 
@@ -56,6 +65,7 @@ public interface BaseService<Type> {
    *
    * @param expected a {@link com.google.gson.JsonObject} object
    * @return a Type object
+   * @since 1.0.5
    */
   Type withExpectedResult(JsonObject expected);
 
@@ -64,6 +74,7 @@ public interface BaseService<Type> {
    *
    * @param validator a {@link java.util.function.Consumer} object
    * @return a Type object
+   * @since 1.0.5
    */
   Type withValidator(Consumer<Validator> validator);
 }
