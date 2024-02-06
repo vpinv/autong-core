@@ -5,8 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.Objects;
 import org.autong.enums.DataType;
-import org.autong.runner.RunnableFactory;
+import org.autong.service.Client;
 import org.autong.service.builder.ServiceFactory;
 import org.autong.util.DataUtil;
 import org.autong.util.LoggerUtil;
@@ -30,7 +31,7 @@ public class TestRunner implements ITest {
   /** beforeSuite. */
   @BeforeSuite
   public void beforeSuite() {
-    testSuite = DataUtil.read("org.autong/loginServiceTest.yaml", DataType.YAML);
+    testSuite = DataUtil.read("org.autong/fsCreateOrderTest.yaml", DataType.YAML);
     ServiceFactory.initialize(testSuite);
   }
 
@@ -43,7 +44,7 @@ public class TestRunner implements ITest {
   @DataProvider(name = "dataProvider")
   public Iterator<JsonElement> dataProvider(Method method) {
     JsonArray testCases = DataUtil.getAsJsonArray(testSuite, "testSuite");
-    return testCases.iterator();
+    return Objects.requireNonNull(testCases).iterator();
   }
 
   /** {@inheritDoc} */
@@ -76,20 +77,25 @@ public class TestRunner implements ITest {
    *
    * @param data a {@link com.google.gson.JsonObject} object
    */
+  @SuppressWarnings({"unchecked", "rawtypes"})
   @Test(dataProvider = "dataProvider")
   public void test(JsonObject data) {
     JsonArray steps = data.getAsJsonArray("steps");
     for (JsonElement step : steps) {
-      RunnableFactory.get()
+
+      JsonObject request =
+          DataUtil.deepMerge(
+              step.getAsJsonObject().getAsJsonObject("request"),
+              ServiceFactory.get(step.getAsJsonObject().get("service").getAsString())
+                  .getRequest(step.getAsJsonObject().get("method").getAsString()));
+
+      Client client =
+          ServiceFactory.get(step.getAsJsonObject().get("service").getAsString()).getClient();
+
+      client
           .withValidator(ServiceFactory::validate)
           .withExpectedResult(step.getAsJsonObject().get("validation").getAsJsonObject())
-          .run(
-              step.getAsJsonObject().get("name").getAsString(),
-              () ->
-                  ServiceFactory.get(step.getAsJsonObject().get("service").getAsString())
-                      .run(
-                          step.getAsJsonObject().get("method").getAsString(),
-                          step.getAsJsonObject().getAsJsonObject("request")));
+          .resolve(client.mergeRequest(request));
     }
   }
 }

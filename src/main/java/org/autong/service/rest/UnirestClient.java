@@ -17,6 +17,7 @@ import kong.unirest.UnirestConfigException;
 import kong.unirest.UnirestInstance;
 import kong.unirest.gson.GsonObjectMapper;
 import org.autong.annotation.Loggable;
+import org.autong.annotation.Runnable;
 import org.autong.config.Settings;
 import org.autong.service.AbstractClient;
 import org.autong.service.rest.model.Request;
@@ -56,6 +57,19 @@ public class UnirestClient extends AbstractClient<UnirestClient, Request, Respon
 
   /** {@inheritDoc} */
   @Override
+  public Request mergeRequest(Request request) {
+    return this.mergeRequest(request, Request.builder().build());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(JsonObject request) {
+    return this.mergeRequest(DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @Runnable
   public Response resolve(Request request) {
     if (request.getMultiPart() != null) {
       return resolveMultiPartRequest(request);

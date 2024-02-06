@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.autong.annotation.Runnable;
 import org.autong.config.Settings;
 import org.autong.exception.CoreException;
 import org.autong.service.AbstractClient;
@@ -55,6 +56,19 @@ public class OracleClient extends AbstractClient<OracleClient, Request, Response
 
   /** {@inheritDoc} */
   @Override
+  public Request mergeRequest(Request request) {
+    return this.mergeRequest(request, Request.builder().build());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(JsonObject request) {
+    return this.mergeRequest(DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @Runnable
   public Response resolve(Request request) {
     Response response;
     switch (request.getType()) {
@@ -69,13 +83,7 @@ public class OracleClient extends AbstractClient<OracleClient, Request, Response
 
   // region private methods
 
-  /**
-   * fetch.
-   *
-   * @param request a {@link org.autong.service.database.model.Request} object
-   * @return a {@link org.autong.service.database.model.Response} object
-   */
-  public Response fetch(Request request) {
+  private Response fetch(Request request) {
     try {
       QueryRunner queryRunner = new QueryRunner();
       List<Map<String, Object>> result =

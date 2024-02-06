@@ -5,11 +5,9 @@ import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
-import org.autong.annotation.Loggable;
 import org.autong.config.Settings;
 import org.autong.service.Client;
 import org.autong.service.ClientFactory;
-import org.autong.util.DataUtil;
 
 /**
  * Service class.
@@ -17,6 +15,7 @@ import org.autong.util.DataUtil;
  * @version 1.0.4
  * @since 1.0.4
  */
+@SuppressWarnings("rawtypes")
 @Getter
 public class Service {
 
@@ -39,40 +38,23 @@ public class Service {
     this.initializeServiceMap(serviceInfo);
   }
 
-  @Loggable
-  private void initializeServiceMap(JsonObject serviceInfo) {
-    for (JsonElement api : serviceInfo.get("apis").getAsJsonArray()) {
-      requestMap.put(api.getAsJsonObject().get("name").getAsString(), api.getAsJsonObject());
-    }
-  }
-
   /**
    * getRequest.
    *
    * @param methodName a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonObject} object
-   * @since 1.0.5
    */
-  @Loggable
   public JsonObject getRequest(String methodName) {
     return this.getRequestMap().get(methodName);
   }
 
-  /**
-   * run.
-   *
-   * @param methodName a {@link java.lang.String} object
-   * @param request a {@link com.google.gson.JsonObject} object
-   * @return a {@link com.google.gson.JsonObject} object
-   * @since 1.0.5
-   */
-  @Loggable
-  public JsonObject run(String methodName, JsonObject request) {
-    request = DataUtil.deepMerge(request, requestMap.get(methodName));
-    return DataUtil.toJsonObject(
-        this.getClient()
-            .resolve(
-                this.getClient()
-                    .mergeRequest(DataUtil.toObject(request, this.getClient().getRequestType()))));
+  // region private methods
+
+  private void initializeServiceMap(JsonObject serviceInfo) {
+    for (JsonElement method : serviceInfo.get("methods").getAsJsonArray()) {
+      requestMap.put(method.getAsJsonObject().get("name").getAsString(), method.getAsJsonObject());
+    }
   }
+
+  // endregion
 }

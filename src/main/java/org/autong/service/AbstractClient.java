@@ -1,10 +1,11 @@
 package org.autong.service;
 
 import com.google.gson.JsonObject;
+import java.util.function.Consumer;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import org.autong.config.Settings;
-import org.autong.service.base.AbstractBaseService;
-import org.autong.service.database.model.Request;
 import org.autong.util.DataUtil;
 
 /**
@@ -15,9 +16,15 @@ import org.autong.util.DataUtil;
  */
 @Getter
 @SuppressWarnings("ClassTypeParameterName")
-public abstract class AbstractClient<Type, Request, Response> extends AbstractBaseService<Type>
+public abstract class AbstractClient<Type extends AbstractClient<?, ?, ?>, Request, Response>
     implements Client<Type, Request, Response> {
   private final Request baseRequest;
+  private final Settings settings;
+  private Settings updatedSettings;
+  private JsonObject expectedResult;
+
+  @Setter(AccessLevel.PROTECTED)
+  private Consumer<Validator> validator;
 
   /**
    * Constructor for AbstractClient.
@@ -27,16 +34,52 @@ public abstract class AbstractClient<Type, Request, Response> extends AbstractBa
    * @since 1.0.5
    */
   protected AbstractClient(Settings settings, Request request) {
-    super(settings);
+    this.settings = settings;
     this.baseRequest = this.mergeRequest(request);
   }
 
+  /**
+   * reset.
+   *
+   * @since 1.0.5
+   */
+  public void reset() {
+    this.updatedSettings = null;
+    this.expectedResult = null;
+    this.validator = null;
+  }
+
   /** {@inheritDoc} */
-  @Override
-  public Request mergeRequest(Request newRequest) {
-    JsonObject source = DataUtil.toJsonObject(newRequest);
-    JsonObject target =
-        DataUtil.toJsonObject(org.autong.service.database.model.Request.builder().build());
+  @SuppressWarnings("unchecked")
+  public Type withSettings(Settings settings) {
+    this.updatedSettings = settings;
+    return (Type) this;
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  public Type withValidator(Consumer<Validator> validator) {
+    this.validator = validator;
+    return (Type) this;
+  }
+
+  /** {@inheritDoc} */
+  @SuppressWarnings("unchecked")
+  public Type withExpectedResult(JsonObject expected) {
+    this.expectedResult = expected;
+    return (Type) this;
+  }
+
+  /**
+   * mergeRequest.
+   *
+   * @param sourceRequest a Request object
+   * @param targetRequest a Request object
+   * @return a Request object
+   */
+  protected Request mergeRequest(Request sourceRequest, Request targetRequest) {
+    JsonObject source = DataUtil.toJsonObject(sourceRequest);
+    JsonObject target = DataUtil.toJsonObject(targetRequest);
 
     if (this.getBaseRequest() != null) {
       target = DataUtil.toJsonObject(this.getBaseRequest());
@@ -46,7 +89,7 @@ public abstract class AbstractClient<Type, Request, Response> extends AbstractBa
       target.remove("headers");
     }
 
-    JsonObject mergedRequest = DataUtil.deepMerge(source, target);
-    return DataUtil.getGson().fromJson(mergedRequest, this.getRequestType());
+    DataUtil.deepMerge(source, target);
+    return DataUtil.getGson().fromJson(target, this.getRequestType());
   }
 }

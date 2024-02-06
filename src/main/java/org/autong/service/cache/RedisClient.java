@@ -5,6 +5,7 @@ import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.autong.annotation.Runnable;
 import org.autong.config.Settings;
 import org.autong.enums.CacheRequestType;
 import org.autong.service.AbstractClient;
@@ -31,7 +32,7 @@ public class RedisClient extends AbstractClient<RedisClient, Request, Response> 
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
    */
-  protected RedisClient(Settings settings, JsonObject request) {
+  public RedisClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));
   }
 
@@ -49,6 +50,19 @@ public class RedisClient extends AbstractClient<RedisClient, Request, Response> 
 
   /** {@inheritDoc} */
   @Override
+  public Request mergeRequest(Request request) {
+    return this.mergeRequest(request, Request.builder().build());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(JsonObject request) {
+    return this.mergeRequest(DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @Runnable
   public Response resolve(Request request) {
     Response response;
     switch (request.getType()) {

@@ -17,6 +17,7 @@ import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.header.Header;
+import org.autong.annotation.Runnable;
 import org.autong.config.Settings;
 import org.autong.service.AbstractClient;
 import org.autong.service.queue.model.Request;
@@ -36,6 +37,7 @@ public class KafkaClient extends AbstractClient<KafkaClient, Request, Response> 
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.5
    */
   public KafkaClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));
@@ -55,6 +57,19 @@ public class KafkaClient extends AbstractClient<KafkaClient, Request, Response> 
 
   /** {@inheritDoc} */
   @Override
+  public Request mergeRequest(Request request) {
+    return this.mergeRequest(request, Request.builder().build());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(JsonObject request) {
+    return this.mergeRequest(DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @Runnable
   public Response resolve(Request request) {
     Response response;
     switch (request.getType()) {

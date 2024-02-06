@@ -19,8 +19,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.autong.config.Settings;
 import org.autong.exception.CoreException;
-import org.autong.service.base.BaseService;
-import org.autong.service.base.Validator;
+import org.autong.service.Client;
+import org.autong.service.Validator;
 import org.autong.util.DataUtil;
 import org.autong.util.LoggerUtil;
 
@@ -154,7 +154,7 @@ public class RunnableAspect {
   }
 
   private static Settings getSettings(Logger log, ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
+    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
       Settings settings = getUpdatedSettings(proceedingJoinPoint);
       if (settings != null) {
         String message =
@@ -169,35 +169,35 @@ public class RunnableAspect {
   }
 
   private static Settings getDefaultSettings(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
+    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
       return service.getSettings();
     }
     return null;
   }
 
   private static Settings getUpdatedSettings(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
+    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
       return service.getUpdatedSettings();
     }
     return null;
   }
 
   private static Consumer<Validator> getValidator(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
+    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
       return service.getValidator();
     }
     return null;
   }
 
   private static JsonObject getExpectedResult(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
+    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
       return service.getExpectedResult();
     }
     return null;
   }
 
   private static void reset(ProceedingJoinPoint proceedingJoinPoint) {
-    if (proceedingJoinPoint.getThis() instanceof BaseService<?> service) {
+    if (proceedingJoinPoint.getThis() instanceof Client<?, ?, ?> service) {
       service.reset();
     }
   }

@@ -9,6 +9,7 @@ import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.Map;
 import org.autong.annotation.Loggable;
+import org.autong.annotation.Runnable;
 import org.autong.config.Settings;
 import org.autong.service.AbstractClient;
 import org.autong.service.soap.model.Request;
@@ -48,12 +49,19 @@ public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request
 
   /** {@inheritDoc} */
   @Override
-  public Request mergeRequest(Request newRequest) {
-    return null;
+  public Request mergeRequest(Request request) {
+    return this.mergeRequest(request, Request.builder().build());
   }
 
   /** {@inheritDoc} */
   @Override
+  public Request mergeRequest(JsonObject request) {
+    return this.mergeRequest(DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @Runnable
   public Response resolve(Request request) {
     RequestSpecification requestSpecification = buildRequest(request);
 

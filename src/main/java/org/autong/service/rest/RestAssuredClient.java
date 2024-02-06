@@ -17,6 +17,7 @@ import java.util.Map;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.autong.annotation.Loggable;
+import org.autong.annotation.Runnable;
 import org.autong.config.Settings;
 import org.autong.exception.CoreException;
 import org.autong.service.AbstractClient;
@@ -65,6 +66,19 @@ public class RestAssuredClient extends AbstractClient<RestAssuredClient, Request
 
   /** {@inheritDoc} */
   @Override
+  public Request mergeRequest(Request request) {
+    return this.mergeRequest(request, Request.builder().build());
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public Request mergeRequest(JsonObject request) {
+    return this.mergeRequest(DataUtil.toObject(request, Request.class));
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  @Runnable
   public Response resolve(Request request) {
     RequestSpecification requestSpecification = buildRequest(request);
 

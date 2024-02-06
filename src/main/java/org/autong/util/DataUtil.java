@@ -291,7 +291,8 @@ public class DataUtil<T> extends U<T> {
    * @return a {@link com.google.gson.JsonObject} object
    */
   public static JsonObject getAsJsonObject(JsonObject jsonObject, String path) {
-    return getAsJsonElement(jsonObject, path).getAsJsonObject();
+    JsonElement element = getAsJsonElement(jsonObject, path);
+    return element != JsonNull.INSTANCE ? element.getAsJsonObject() : null;
   }
 
   /**
@@ -302,7 +303,8 @@ public class DataUtil<T> extends U<T> {
    * @return a {@link com.google.gson.JsonArray} object
    */
   public static JsonArray getAsJsonArray(JsonObject jsonObject, String path) {
-    return getAsJsonElement(jsonObject, path).getAsJsonArray();
+    JsonElement element = getAsJsonElement(jsonObject, path);
+    return element != JsonNull.INSTANCE ? element.getAsJsonArray() : null;
   }
 
   /**
@@ -313,7 +315,8 @@ public class DataUtil<T> extends U<T> {
    * @return a {@link java.lang.String} object
    */
   public static String getAsString(JsonObject jsonObject, String path) {
-    return getAsJsonElement(jsonObject, path).getAsString();
+    JsonElement element = getAsJsonElement(jsonObject, path);
+    return element != JsonNull.INSTANCE ? element.getAsString() : null;
   }
 
   /**

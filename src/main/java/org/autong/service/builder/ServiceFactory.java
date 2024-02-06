@@ -5,7 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.HashMap;
 import org.autong.enums.DataType;
-import org.autong.service.base.Validator;
+import org.autong.service.Validator;
 import org.autong.util.DataUtil;
 
 /**
@@ -52,10 +52,10 @@ public class ServiceFactory {
   /**
    * validate.
    *
-   * @param validator a {@link org.autong.service.base.Validator} object
+   * @param validator a {@link org.autong.service.Validator} object
    * @since 1.0.5
    */
-  public static void validate(Validator validator) {
-    ServiceValidator.validate(validator);
+  public static void validate(Object validator) {
+    ServiceValidator.validate((Validator) validator);
   }
 }

@@ -143,9 +143,9 @@
       <version>1.85</version>
     </dependency>
     <dependency>
-      <groupId>jakarta.jms</groupId>
-      <artifactId>jakarta.jms-api</artifactId>
-      <version>3.1.0</version>
+      <groupId>javax.jms</groupId>
+      <artifactId>javax.jms-api</artifactId>
+      <version>2.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -301,6 +301,20 @@
       <groupId>net.javacrumbs.json-unit</groupId>
       <artifactId>json-unit-json-path</artifactId>
       <version>3.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>tibjms</groupId>
+      <artifactId>tibjms</artifactId>
+      <version>tibjms1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/libs/tibjms/tibjms/tibjms1.0/tibjms-tibjms1.0.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>ojdbc7</groupId>
+      <artifactId>ojdbc7</artifactId>
+      <version>ojdbc7.1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/libs/ojdbc7/ojdbc7/ojdbc7.1/ojdbc7-ojdbc7.1.jar</systemPath>
     </dependency>
   </dependencies>
   <build>
