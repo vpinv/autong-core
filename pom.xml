@@ -3,13 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.autong</groupId>
   <artifactId>autong</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
   <name>autong</name>
   <url/>
   <parent>
     <groupId>org.autong</groupId>
     <artifactId>autong-parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <relativePath>../autong-parent/pom.xml</relativePath>
   </parent>
   <dependencies>

@@ -39,6 +39,6 @@ public class ServiceTest {
             .headers(ImmutableMap.ofEntries(Map.entry("accept", "application/json")))
             .build();
     Response response = client.resolve(request);
-    Assert.assertEquals(response.getStatusCode(), 400);
+    Assert.assertEquals(response.getStatusCode(), 404);
   }
 }

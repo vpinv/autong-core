@@ -12,7 +12,6 @@ import org.autong.enums.ClientType;
  * @version 1.0.3
  * @since 1.0.3
  */
-@SuppressWarnings("rawtypes")
 public class ClientFactory {
   private ClientFactory() {}
 
@@ -25,8 +24,9 @@ public class ClientFactory {
    * @return a {@link org.autong.service.Client} object
    * @since 1.0.4
    */
-  public static Client getClient(ClientType clientType, Settings settings, JsonObject request) {
-    Client client;
+  public static Client<? extends AbstractClient<?, ?, ?>, ?, ?> getClient(
+      ClientType clientType, Settings settings, JsonObject request) {
+    Client<? extends AbstractClient<?, ?, ?>, ?, ?> client;
     switch (clientType) {
       case REST, REST_RESTASSURED -> client =
           new org.autong.service.rest.RestAssuredClient(settings, request);
@@ -56,7 +56,8 @@ public class ClientFactory {
    * @return a {@link org.autong.service.Client} object
    * @since 1.0.5
    */
-  public static Client getClient(String clientType, Settings settings, JsonObject request) {
+  public static Client<? extends AbstractClient<?, ?, ?>, ?, ?> getClient(
+      String clientType, Settings settings, JsonObject request) {
     return getClient(ClientType.valueOf(clientType), settings, request);
   }
 }

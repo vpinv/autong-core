@@ -5,4 +5,4 @@ suites:
   tests:
   - name: Service Tests
     classes:
-    - org.autong.TestRunner
+    - org.autong.ServiceTest

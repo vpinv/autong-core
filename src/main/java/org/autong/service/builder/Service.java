@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
 import org.autong.config.Settings;
+import org.autong.service.AbstractClient;
 import org.autong.service.Client;
 import org.autong.service.ClientFactory;
 
@@ -15,11 +16,10 @@ import org.autong.service.ClientFactory;
  * @version 1.0.4
  * @since 1.0.4
  */
-@SuppressWarnings("rawtypes")
 @Getter
 public class Service {
 
-  private final Client client;
+  private final Client<? extends AbstractClient<?, ?, ?>, ?, ?> client;
   private final Map<String, JsonObject> requestMap;
 
   /**
@@ -43,6 +43,7 @@ public class Service {
    *
    * @param methodName a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.6
    */
   public JsonObject getRequest(String methodName) {
     return this.getRequestMap().get(methodName);
