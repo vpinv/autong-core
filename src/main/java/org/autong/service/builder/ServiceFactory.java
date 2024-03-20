@@ -3,10 +3,14 @@ package org.autong.service.builder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
 import java.util.HashMap;
+import java.util.Map;
 import org.autong.enums.DataType;
 import org.autong.service.Validator;
 import org.autong.util.DataUtil;
+import org.testng.Assert;
 
 /**
  * ServiceFactory class.
@@ -57,5 +61,58 @@ public class ServiceFactory {
    */
   public static void validate(Object validator) {
     ServiceValidator.validate((Validator) validator);
+  }
+
+  /**
+   * validate.
+   *
+   * @param validator a {@link org.autong.service.Validator} object
+   */
+  public static void validate(Validator validator) {
+    JsonObject actual = formatResponse(validator.getActual());
+    DocumentContext responseContext = JsonPath.parse(actual.toString());
+    JsonObject expected = validator.getExpected();
+
+    for (JsonElement expression : expected.getAsJsonArray("steps")) {
+      Object result = responseContext.read(expression.getAsString());
+      Assert.assertTrue(result instanceof Iterable iter && iter.iterator().hasNext());
+    }
+  }
+
+  /**
+   * setVars.
+   *
+   * @param response a {@link java.lang.Object} object
+   * @param step a {@link com.google.gson.JsonObject} object
+   * @param cache a {@link java.util.Map} object
+   */
+  public static void setVars(Object response, JsonObject step, Map<String, JsonElement> cache) {
+    JsonObject jsonResponse = formatResponse(DataUtil.toJsonObject(response));
+    DocumentContext responseContext = JsonPath.parse(jsonResponse.toString());
+
+    Map<String, String> map = DataUtil.toObject(step.get("variables").getAsJsonObject(), Map.class);
+    for (Map.Entry<String, String> entry : map.entrySet()) {
+      Object result = responseContext.read(entry.getValue());
+      cache.put(entry.getKey(), DataUtil.toJsonElement(result));
+    }
+  }
+
+  /**
+   * formatResponse.
+   *
+   * @param response a {@link com.google.gson.JsonObject} object
+   * @return a {@link com.google.gson.JsonObject} object
+   */
+  public static JsonObject formatResponse(JsonObject response) {
+    if (response.has("body")) {
+      String body = response.get("body").getAsString();
+      if (DataUtil.getDataType(body) == DataType.JSON) {
+        response.add("body", DataUtil.toJsonObject(body));
+      } else if (DataUtil.getDataType(body) == DataType.XML) {
+        response.add("body", DataUtil.xmlToJsonObject(body));
+      }
+    }
+
+    return response;
   }
 }

@@ -4,7 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
 import org.autong.enums.DataType;
@@ -91,7 +93,9 @@ public class TestRunner implements ITest {
   @Test(dataProvider = "dataProvider")
   @SuppressWarnings({"rawtypes", "unchecked"})
   public void run(JsonObject data) {
+    Map<String, JsonElement> cache = new HashMap<>();
     JsonArray steps = data.getAsJsonArray("steps");
+
     for (JsonElement step : steps) {
 
       JsonObject request =
@@ -103,10 +107,13 @@ public class TestRunner implements ITest {
       Client client =
           ServiceFactory.get(step.getAsJsonObject().get("service").getAsString()).getClient();
 
-      client
-          .withValidator(ServiceFactory::validate)
-          .withExpectedResult(step.getAsJsonObject().get("validation").getAsJsonObject())
-          .resolve(client.mergeRequest(request));
+      Object response =
+          client
+              .withValidator(ServiceFactory::validate)
+              .withExpectedResult(step.getAsJsonObject().get("validation").getAsJsonObject())
+              .resolve(client.mergeRequest(request));
+
+      ServiceFactory.setVars(response, step.getAsJsonObject(), cache);
     }
   }
 }
