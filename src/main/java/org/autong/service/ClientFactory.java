@@ -36,7 +36,6 @@ public class ClientFactory {
       case DATABASE_ORACLE -> client =
           new org.autong.service.database.OracleClient(settings, request);
       case QUEUE_KAFKA -> client = new org.autong.service.queue.KafkaClient(settings, request);
-      case QUEUE_TIBCO -> client = new org.autong.service.queue.TibcoClient(settings, request);
       case CACHE_REDIS -> client = new org.autong.service.cache.RedisClient(settings, request);
       case DATABASE_CASSANDRA,
           DATABASE_MONGODB,

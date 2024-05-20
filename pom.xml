@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.autong</groupId>
   <artifactId>autong</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.8</version>
   <name>autong</name>
   <url/>
   <parent>
@@ -240,20 +240,6 @@
     <dependency>
       <groupId>net.javacrumbs.json-unit</groupId>
       <artifactId>json-unit-json-path</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>tibjms</groupId>
-      <artifactId>tibjms</artifactId>
-      <version>tibjms1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/libs/tibjms/tibjms/tibjms1.0/tibjms-tibjms1.0.jar</systemPath>
-    </dependency>
-    <dependency>
-      <groupId>ojdbc7</groupId>
-      <artifactId>ojdbc7</artifactId>
-      <version>ojdbc7.1</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/resources/libs/ojdbc7/ojdbc7/ojdbc7.1/ojdbc7-ojdbc7.1.jar</systemPath>
     </dependency>
   </dependencies>
   <build>
