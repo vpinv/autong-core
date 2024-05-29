@@ -1,4 +1,4 @@
-package org.autong.test.listener;
+package org.autong.test.testng.listener;
 
 import com.epam.reportportal.service.ReportPortal;
 import com.epam.reportportal.testng.BaseTestNGListener;

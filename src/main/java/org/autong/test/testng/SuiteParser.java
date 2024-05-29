@@ -1,4 +1,4 @@
-package org.autong.test;
+package org.autong.test.testng;
 
 import com.github.underscore.Optional;
 import com.github.underscore.U;

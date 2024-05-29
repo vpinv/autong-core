@@ -1,4 +1,4 @@
-package org.autong.test;
+package org.autong.test.testng;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
