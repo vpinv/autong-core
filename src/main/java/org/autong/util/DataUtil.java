@@ -76,6 +76,7 @@ public class DataUtil<T> extends U<T> {
    * Constructor for DataUtil.
    *
    * @param iterable a {@link java.lang.Iterable} object
+   * @since 1.0.8
    */
   public DataUtil(Iterable<T> iterable) {
     super(iterable);
@@ -85,6 +86,7 @@ public class DataUtil<T> extends U<T> {
    * Constructor for DataUtil.
    *
    * @param string a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public DataUtil(String string) {
     super(string);
@@ -96,6 +98,7 @@ public class DataUtil<T> extends U<T> {
    * @param resourcePath a {@link java.lang.String} object
    * @param dataType a {@link org.autong.enums.DataType} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject read(String resourcePath, DataType dataType) {
     return read(resourcePath, dataType, EncodingType.STANDARD);
@@ -108,6 +111,7 @@ public class DataUtil<T> extends U<T> {
    * @param dataType a {@link org.autong.enums.DataType} object
    * @param encodingType a {@link org.autong.enums.EncodingType} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject read(String resourcePath, DataType dataType, EncodingType encodingType) {
     URL url = Resources.getResource(resourcePath);
@@ -120,6 +124,7 @@ public class DataUtil<T> extends U<T> {
    * @param resourceUrl a {@link java.net.URL} object
    * @param dataType a {@link org.autong.enums.DataType} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject read(URL resourceUrl, DataType dataType) {
     return read(resourceUrl, dataType, EncodingType.STANDARD);
@@ -132,6 +137,7 @@ public class DataUtil<T> extends U<T> {
    * @param dataType a {@link org.autong.enums.DataType} object
    * @param encodingType a {@link org.autong.enums.EncodingType} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject read(URL resourceUrl, DataType dataType, EncodingType encodingType) {
     try {
@@ -173,6 +179,7 @@ public class DataUtil<T> extends U<T> {
    * @param stream a {@link java.io.InputStream} object
    * @param dataType a {@link org.autong.enums.DataType} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject read(InputStream stream, DataType dataType) {
     return read(stream, dataType, EncodingType.STANDARD);
@@ -185,6 +192,7 @@ public class DataUtil<T> extends U<T> {
    * @param dataType a {@link org.autong.enums.DataType} object
    * @param encodingType a {@link org.autong.enums.EncodingType} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject read(InputStream stream, DataType dataType, EncodingType encodingType) {
     try {
@@ -230,6 +238,7 @@ public class DataUtil<T> extends U<T> {
    * @param data a {@link com.google.gson.JsonObject} object
    * @param dataType a {@link org.autong.enums.DataType} object
    * @return a {@link java.net.URL} object
+   * @since 1.0.8
    */
   public static URL write(String resourcePath, JsonObject data, DataType dataType) {
     URL url = null;
@@ -251,6 +260,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonString a {@link java.lang.String} object
    * @param path a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonElement} object
+   * @since 1.0.8
    */
   public static JsonElement getAsJsonElement(String jsonString, String path) {
     JsonPath jsonPath = JsonPath.from(jsonString);
@@ -264,6 +274,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonObject a {@link com.google.gson.JsonObject} object
    * @param path a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonElement} object
+   * @since 1.0.8
    */
   public static JsonElement getAsJsonElement(JsonObject jsonObject, String path) {
     String jsonString = gson.toJson(jsonObject);
@@ -277,6 +288,7 @@ public class DataUtil<T> extends U<T> {
    * @param path a {@link java.lang.String} object
    * @param dataType a {@link org.autong.enums.DataType} object
    * @return a {@link com.google.gson.JsonElement} object
+   * @since 1.0.8
    */
   public static JsonElement getAsJsonElement(String data, String path, DataType dataType) {
     JsonObject jsonObject = read(IOUtils.toInputStream(data, Charset.defaultCharset()), dataType);
@@ -289,6 +301,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonObject a {@link com.google.gson.JsonObject} object
    * @param path a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject getAsJsonObject(JsonObject jsonObject, String path) {
     JsonElement element = getAsJsonElement(jsonObject, path);
@@ -301,6 +314,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonObject a {@link com.google.gson.JsonObject} object
    * @param path a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonArray} object
+   * @since 1.0.8
    */
   public static JsonArray getAsJsonArray(JsonObject jsonObject, String path) {
     JsonElement element = getAsJsonElement(jsonObject, path);
@@ -313,6 +327,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonObject a {@link com.google.gson.JsonObject} object
    * @param path a {@link java.lang.String} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String getAsString(JsonObject jsonObject, String path) {
     JsonElement element = getAsJsonElement(jsonObject, path);
@@ -324,6 +339,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param object a {@link java.lang.Object} object
    * @return a {@link com.google.gson.JsonElement} object
+   * @since 1.0.8
    */
   public static JsonElement toJsonElement(Object object) {
     return Optional.ofNullable(object)
@@ -340,6 +356,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param object a {@link java.lang.Object} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject toJsonObject(Object object) {
     return toJsonElement(object).getAsJsonObject();
@@ -350,6 +367,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param object a {@link java.lang.Object} object
    * @return a {@link com.google.gson.JsonArray} object
+   * @since 1.0.8
    */
   public static JsonArray toJsonArray(Object object) {
     return toJsonElement(object).getAsJsonArray();
@@ -362,6 +380,7 @@ public class DataUtil<T> extends U<T> {
    * @param classType a {@link java.lang.Class} object
    * @param <O> a O class
    * @return a O object
+   * @since 1.0.8
    */
   public static <O> O toObject(String jsonString, Class<O> classType) {
     return toObject(toJsonObject(jsonString), classType);
@@ -374,6 +393,7 @@ public class DataUtil<T> extends U<T> {
    * @param classType a {@link java.lang.Class} object
    * @param <O> a O class
    * @return a O object
+   * @since 1.0.8
    */
   public static <O> O toObject(JsonObject jsonObject, Class<O> classType) {
     return getGson().fromJson(jsonObject, classType);
@@ -386,6 +406,7 @@ public class DataUtil<T> extends U<T> {
    * @param classType a {@link java.lang.Class} object
    * @param <O> a O class
    * @return a {@link java.util.List} object
+   * @since 1.0.8
    */
   public static <O> List<O> toObjectArray(String jsonString, Class<O> classType) {
     return toObjectArray(toJsonArray(jsonString), classType);
@@ -398,6 +419,7 @@ public class DataUtil<T> extends U<T> {
    * @param classType a {@link java.lang.Class} object
    * @param <O> a O class
    * @return a {@link java.util.List} object
+   * @since 1.0.8
    */
   public static <O> List<O> toObjectArray(JsonArray jsonArray, Class<O> classType) {
     Type arrayType = TypeToken.getParameterized(ArrayList.class, classType).getType();
@@ -409,6 +431,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param xml a {@link java.lang.String} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject xmlToJsonObject(String xml) {
     return getGson().fromJson(xmlToJson(xml), JsonObject.class);
@@ -419,6 +442,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param jsonObject a {@link com.google.gson.JsonObject} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String jsonObjectToXml(JsonObject jsonObject) {
     return jsonToXml(getGson().toJson(jsonObject));
@@ -430,6 +454,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonObject a {@link com.google.gson.JsonObject} object
    * @param mode a Mode object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String jsonObjectToXml(JsonObject jsonObject, Mode mode) {
     return jsonToXml(getGson().toJson(jsonObject), mode);
@@ -440,6 +465,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param jsonArray a {@link com.google.gson.JsonArray} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String jsonArrayToXml(JsonArray jsonArray) {
     return jsonToXml(getGson().toJson(jsonArray));
@@ -451,6 +477,7 @@ public class DataUtil<T> extends U<T> {
    * @param jsonArray a {@link com.google.gson.JsonArray} object
    * @param mode a Mode object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String jsonArrayToXml(JsonArray jsonArray, Mode mode) {
     return jsonToXml(getGson().toJson(jsonArray), mode);
@@ -462,6 +489,7 @@ public class DataUtil<T> extends U<T> {
    * @param source a {@link com.google.gson.JsonObject} object
    * @param target a {@link com.google.gson.JsonObject} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject deepMerge(JsonObject source, JsonObject target) {
     if (source == null || target == null) {
@@ -493,6 +521,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param jsonString a {@link java.lang.String} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String jsonToYaml(String jsonString) {
     try {
@@ -512,6 +541,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param input a {@link java.lang.String} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String csvToJson(String input) {
     JSONArray json = CDL.toJSONArray(input);
@@ -523,6 +553,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param data a {@link com.google.gson.JsonObject} object
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String jsonToCsv(JsonObject data) {
     JSONArray jsonArray = new JSONArray(data.getAsJsonArray("myArrayList").toString());
@@ -535,6 +566,7 @@ public class DataUtil<T> extends U<T> {
    * @param resourcePath a {@link java.lang.String} object
    * @param data a {@link com.google.gson.JsonObject} object
    * @return a {@link java.net.URL} object
+   * @since 1.0.8
    */
   public static URL createAndWriteJsonToExcel(String resourcePath, JsonObject data) {
 
@@ -581,6 +613,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param html a {@link java.lang.String} object
    * @return a {@link org.jsoup.nodes.Document} object
+   * @since 1.0.8
    */
   public static Document toHtmlDocument(String html) {
     return Jsoup.parse(html);
@@ -592,6 +625,7 @@ public class DataUtil<T> extends U<T> {
    * @param input a {@link java.lang.String} object
    * @param regex a {@link java.lang.String} object
    * @return a {@link java.util.List} object
+   * @since 1.0.8
    */
   public static List<String> find(String input, String regex) {
     Pattern pattern = Pattern.compile(regex);
@@ -609,6 +643,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param inputString a {@link java.lang.String} object
    * @return a {@link org.autong.enums.DataType} object
+   * @since 1.0.8
    */
   public static DataType getDataType(String inputString) {
     if (StringUtils.isNotEmpty(inputString)) {
@@ -630,6 +665,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param inputBase64Format a {@link java.lang.String} object
    * @return an array of {@link byte} objects
+   * @since 1.0.8
    */
   public static byte[] decodeBase64(String inputBase64Format) {
     try {
@@ -644,6 +680,7 @@ public class DataUtil<T> extends U<T> {
    *
    * @param bytes an array of {@link byte} objects
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String encodeBase64(byte[] bytes) {
 

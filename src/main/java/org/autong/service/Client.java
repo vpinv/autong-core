@@ -109,6 +109,7 @@ public interface Client<Type extends AbstractClient<?, ?, ?>, Request, Response>
    *
    * @param request a {@link com.google.gson.JsonObject} object
    * @return a Request object
+   * @since 1.0.8
    */
   Request mergeRequest(JsonObject request);
 

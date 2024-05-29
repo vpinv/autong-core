@@ -38,6 +38,7 @@ public class PostgresClient extends AbstractClient<PostgresClient, Request, Resp
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public PostgresClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));

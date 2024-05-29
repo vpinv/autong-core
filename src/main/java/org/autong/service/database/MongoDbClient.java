@@ -41,6 +41,7 @@ public class MongoDbClient extends AbstractClient<MongoDbClient, Request, Respon
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public MongoDbClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));

@@ -37,6 +37,7 @@ public class OracleClient extends AbstractClient<OracleClient, Request, Response
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public OracleClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));

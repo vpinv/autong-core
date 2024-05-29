@@ -34,13 +34,18 @@ public class LoggerUtil {
    *
    * @param loggerName a {@link java.lang.String} object
    * @return a {@link org.apache.logging.log4j.Logger} object
+   * @since 1.0.8
    */
   public static Logger getLogger(String loggerName) {
     log = LogManager.getLogger(loggerName);
     return log;
   }
 
-  /** reconfigure. */
+  /**
+   * reconfigure.
+   *
+   * @since 1.0.8
+   */
   public static void reconfigure() {
     try {
       ((org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false)).reconfigure();
@@ -56,6 +61,7 @@ public class LoggerUtil {
    * getLogFileName.
    *
    * @return a {@link java.lang.String} object
+   * @since 1.0.8
    */
   public static String getLogFileName() {
     try {

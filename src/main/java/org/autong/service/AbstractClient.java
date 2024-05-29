@@ -76,6 +76,7 @@ public abstract class AbstractClient<Type extends AbstractClient<?, ?, ?>, Reque
    * @param sourceRequest a Request object
    * @param targetRequest a Request object
    * @return a Request object
+   * @since 1.0.8
    */
   protected Request mergeRequest(Request sourceRequest, Request targetRequest) {
     JsonObject source = DataUtil.toJsonObject(sourceRequest);

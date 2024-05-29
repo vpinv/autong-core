@@ -31,6 +31,7 @@ public class RedisClient extends AbstractClient<RedisClient, Request, Response> 
    *
    * @param settings a {@link org.autong.config.Settings} object
    * @param request a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public RedisClient(Settings settings, JsonObject request) {
     super(settings, DataUtil.toObject(request, Request.class));
@@ -135,6 +136,7 @@ public class RedisClient extends AbstractClient<RedisClient, Request, Response> 
    *
    * @param request a {@link org.autong.service.cache.model.Request} object
    * @return a {@link org.autong.service.cache.model.Response} object
+   * @since 1.0.8
    */
   public Response delete(Request request) {
     Response response = Response.builder().build();

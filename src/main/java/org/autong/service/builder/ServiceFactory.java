@@ -67,6 +67,7 @@ public class ServiceFactory {
    * validate.
    *
    * @param validator a {@link org.autong.service.Validator} object
+   * @since 1.0.8
    */
   public static void validate(Validator validator) {
     JsonObject actual = formatResponse(validator.getActual());
@@ -85,6 +86,7 @@ public class ServiceFactory {
    * @param response a {@link java.lang.Object} object
    * @param step a {@link com.google.gson.JsonObject} object
    * @param cache a {@link java.util.Map} object
+   * @since 1.0.8
    */
   public static void setVars(Object response, JsonObject step, Map<String, JsonElement> cache) {
     JsonObject jsonResponse = formatResponse(DataUtil.toJsonObject(response));
@@ -102,6 +104,7 @@ public class ServiceFactory {
    *
    * @param response a {@link com.google.gson.JsonObject} object
    * @return a {@link com.google.gson.JsonObject} object
+   * @since 1.0.8
    */
   public static JsonObject formatResponse(JsonObject response) {
     if (response.has("body")) {
